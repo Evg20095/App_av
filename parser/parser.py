@@ -9,8 +9,8 @@ from mysql.connector import Error
 def emit_message(message, routing_key):
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
     channel = connection.channel()
-    channel.exchange_declare(exchange='direct_filename', exchange_type='direct')
-    channel.basic_publish(exchange='direct_filename', routing_key=routing_key, body=message)
+    channel.exchange_declare(exchange='direct_filename2', exchange_type='direct')
+    channel.basic_publish(exchange='direct_filename2', routing_key=routing_key, body=message)
     print(" [x] Sent %r" % (message))
     connection.close()
 
@@ -168,10 +168,9 @@ def callback(ch, method, properties, body):
     # добавляем новые слова в db
     add_new_words(conn, new_words_for_db)
     
-    # отправляем сообщение в контейнер записи файлов на csv
+    # отправляем сообщение в write_csv для записи файлов на csv
     emit_message(n, 'for_write_csv')
-                                    
-    
+
     
     conn.close()
 
@@ -185,10 +184,13 @@ def start_consuming():
     channel.basic_consume(queue='parser', on_message_callback=callback, auto_ack=True)
     channel.start_consuming()
 
+
 if __name__ == "__main__":
     
     print('Start parser')
-    n = sys.argv[1]
-
+    n = str(sys.argv[1])
+    print(n)
+ 
     start_consuming()
+
     

@@ -8,6 +8,6 @@ COPY . /usr/app/
 RUN pip install --no-cache-dir -r requirements.txt 
 
 
-CMD sleep 30 && python init_db.py && python producer.py
+CMD sleep 40 && python init_db.py && python producer.py
 
 # (python parser.py n & python error_handler.py sender_email sender_password receiver_email & python producer.py)

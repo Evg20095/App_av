@@ -8,6 +8,6 @@ COPY . /usr/app/
 RUN pip install --no-cache-dir -r requirements.txt 
 
 
-CMD sleep 27 && python error_handler.py sender_email sender_password receiver_email
+CMD sleep 37 && python error_handler.py sender_email sender_password receiver_email
 
 # (python parser.py n & python error_handler.py sender_email sender_password receiver_email & python producer.py)

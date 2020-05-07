@@ -25,6 +25,7 @@ def write_to_csv(connection, n):
     Записывает записи слов из базы данных, количество которых больше n в csv файл.
     Удаляет записи слов из базы данных, количество которых больше n.
     """
+    n = n.decode('utf-8')
     query = """
             SELECT words, file_name
             FROM words_counter
@@ -74,18 +75,16 @@ def callback(ch, method, properties, body):
 def start_consuming():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
     channel = connection.channel()
-    channel.exchange_declare(exchange='direct_filename', exchange_type='direct')
+    channel.exchange_declare(exchange='direct_filename2', exchange_type='direct')
     channel.queue_declare(queue='write_csv')
-    channel.queue_bind(exchange='direct_filename', queue='write_csv', routing_key='for_write_csv')
+    channel.queue_bind(exchange='direct_filename2', queue='write_csv', routing_key='for_write_csv')
     print(' [*] Waiting for file. To exit press CTRL+C')
     channel.basic_consume(queue='write_csv', on_message_callback=callback, auto_ack=True)
     channel.start_consuming()
     
     
 if __name__ == "__main__":
-    
     start_consuming()
+            
 
-        
-        
     

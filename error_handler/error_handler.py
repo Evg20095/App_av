@@ -47,5 +47,5 @@ if __name__ == "__main__":
 
     # sender_email = input('Введите gmail почту для отправки писем: ')
     # password = input('Введите пароль: ')
-    # receiver_email = input('Введите gmail почту для приёма писем: ')
+    # receiver_email = input('Введите gmail почту для приёма писем: ') 
     start_consuming()
