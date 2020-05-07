@@ -2,6 +2,7 @@
 =========
 
 В parser/Dockerfile нужно установить занчение n \
+\
 В error_handler/Dockerfile нужно установить значения: \
 sender_email — почта для отправки писем \
 sender_password — пароль от почты для отправки \
