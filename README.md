@@ -11,7 +11,7 @@ receiver_email — почта для приёма писем
 
 Обработка ошибок
 =========
-В случае если ен удаётся подключить к базе данных:\
+В случае если не удаётся подключить к базе данных:\
 docker exec -it db_container_id bash\
 mysql -u root -p\
 CREATE USER 'root'@'%' IDENTIFIED BY '1';\
