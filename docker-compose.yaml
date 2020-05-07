@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+
+    rabbitmq:
+        image: rabbitmq:3
+        container_name: rabbitmq
+        volumes:
+            - /var/log/rabbitmq:/var/log/rabbitmq
+
+
+    database:
+        image: mysql/mysql-server:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: "1"
+            MYSQL_ROOT_HOST: "%"
+        volumes:
+            - ./mysql:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        
+    
+    producer:
+        build: ./producer
+        volumes:
+            - /av_app/container:/usr/app/container
+            - /av_app/parser_container:/usr/app/parser_container
+            - /av_app/other_files:/usr/app/other_files
+        
+
+    parser:
+        build: ./parser
+        volumes:
+            - /av_app/parser_container:/usr/app/parser_container
+
+
+    error_handler:
+        build: ./error_handler
+        ports:
+            - "465:465"
+
+
+    write_csv:
+        build: ./write_csv
+        volumes:
+            - /av_app/csv_files:/usr/app/csv_files
+
+
+    # my_app3:
+    #     build: .
+    #     volumes:
+    #         - /projects:/usr/app/container
+    #     ports:
+    #         - "465:465"
+        
+    
