@@ -1,6 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
-import csv
+import csv, time
 import pika
 
 
@@ -84,7 +84,12 @@ def start_consuming():
     
     
 if __name__ == "__main__":
-    start_consuming()
+    while True:
+        try:
+            start_consuming()
+        except:
+            print('Ждём кролика')
+            time.sleep(7)
             
 
     

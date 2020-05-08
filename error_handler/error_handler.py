@@ -1,5 +1,5 @@
 import pika
-import smtplib, ssl, sys
+import smtplib, ssl, sys, time
 
 def send_message_to_email(sender_email, email_password, receiver_email, body):
     """
@@ -48,4 +48,9 @@ if __name__ == "__main__":
     # sender_email = input('Введите gmail почту для отправки писем: ')
     # password = input('Введите пароль: ')
     # receiver_email = input('Введите gmail почту для приёма писем: ') 
-    start_consuming()
+    while True:
+        try:
+            start_consuming()
+        except:
+            print('Ждём кролика')
+            time.sleep(7)

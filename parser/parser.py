@@ -1,4 +1,4 @@
-import pika, sys, os
+import pika, sys, os, time
 import mysql.connector
 from mysql.connector import Error
 
@@ -186,11 +186,16 @@ def start_consuming():
 
 
 if __name__ == "__main__":
-    
+     
     print('Start parser')
     n = str(sys.argv[1])
     print(n)
- 
-    start_consuming()
+    while True:
+            try:
+                start_consuming()
+            except:
+                print('Ждём кролика')
+                time.sleep(7)
+
 
     

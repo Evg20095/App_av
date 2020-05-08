@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+import time
 
 
 def create_connection_to_server(host_name, user_name, user_password):
@@ -38,7 +39,8 @@ def create_connection(host_name, user_name, user_password, db_name):
 
 
 def create_database(connection, query):
-
+    cursor = None
+    
     cursor = connection.cursor()
     try:
         cursor.execute(query)
@@ -58,10 +60,18 @@ def create_table_with_words(connection, query):
 
 
 if __name__ == "__main__":
-    connection = create_connection_to_server("database", "root", "1")
-    query = "CREATE DATABASE words_database"
-    create_database(connection, query)
-    connection.close()
+    status_connection_to_server = False
+    while status_connection_to_server is False:
+        try:
+            connection = create_connection_to_server("database", "root", "1")
+            query = "CREATE DATABASE words_database"
+            create_database(connection, query)
+            connection.close()
+            status_connection_to_server = True
+        except:
+            print('Ждём запуска базы данных')
+            time.sleep(5) 
+            
     
     conn = create_connection("database", "root", "1", "words_database")
     query = """

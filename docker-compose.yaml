@@ -7,15 +7,18 @@ services:
         container_name: rabbitmq
         volumes:
             - /var/log/rabbitmq:/var/log/rabbitmq
+        depends_on:
+            - "database"
 
 
     database:
         image: mysql/mysql-server:latest
         environment:
-            MYSQL_ROOT_PASSWORD: "1"
-            MYSQL_ROOT_HOST: "%"
+            - MYSQL_ROOT_PASSWORD=1
+            - MYSQL_ROOT_HOST=%
+
         volumes:
-            - ./mysql:/var/lib/mysql
+            - /mysql:/var/lib/mysql
         ports:
             - "3306:3306"
         
